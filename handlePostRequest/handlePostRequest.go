@@ -17,15 +17,14 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Convert data to JSON
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		http.Error(w, "Error encoding data", http.StatusInternalServerError)
 		return
 	}
-
-	// Send data to Kafka using goroutine
-	go sendDataToKafka.SendDataToKafka(jsonData, "your_topic")
+	//get the data from the post request and send to kafka
+	//goroutine-1.
+	go sendDataToKafka.SendDataToKafka(jsonData, "Data_topic")
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Data sent to Kafka!")
